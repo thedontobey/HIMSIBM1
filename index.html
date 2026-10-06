@@ -3,321 +3,708 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For Jyothika – With All My Heart</title>
+    <title>IBM HIMS AI Assessment</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        romanticBg: '#181114',
-                        romanticCard: 'rgba(38, 26, 32, 0.65)',
-                        romanticBorder: 'rgba(244, 162, 182, 0.25)',
-                        roseGold: '#e0a9a7',
-                        blushPink: '#ffb5bc',
-                        deepWine: '#4a1525',
+                        ibm: {
+                            blue: '#0f62fe',
+                            dark: '#161616',
+                            card: '#262626',
+                            accent: '#4589ff',
+                            success: '#24a148',
+                            danger: '#da1e28',
+                            border: '#393939'
+                        }
                     },
                     fontFamily: {
-                        sans: ['-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"SF Pro Text"', '"Helvetica Neue"', 'Helvetica', 'Arial', 'sans-serif'],
+                        sans: ['Inter', 'sans-serif'],
                     }
                 }
             }
         }
     </script>
-    <!-- FontAwesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            background-color: #120d10;
-            color: #fce8ec;
+        /* Disable text selection and drag globally for security */
+        body, html {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            background-color: #161616;
+            color: #f4f4f4;
+            font-family: 'Inter', sans-serif;
             overflow-x: hidden;
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
         }
 
+        /* Glassmorphism Styling */
         .glass-panel {
-            background: rgba(30, 20, 25, 0.7);
-            backdrop-filter: blur(35px);
-            -webkit-backdrop-filter: blur(35px);
-            border: 1px solid rgba(255, 181, 188, 0.2);
-            box-shadow: 0 20px 50px rgba(74, 21, 37, 0.35);
+            background: rgba(38, 38, 38, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
-        .glass-card {
-            background: rgba(45, 28, 36, 0.5);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 181, 188, 0.15);
-        }
-
-        /* Smooth page transition utility */
-        .page-transition {
-            transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .hidden-page {
-            opacity: 0;
-            transform: scale(0.95) translateY(20px);
-            pointer-events: none;
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            display: none;
-        }
-
-        .active-page {
-            opacity: 1;
-            transform: scale(1) translateY(0);
-            pointer-events: auto;
-            position: relative;
-            display: flex;
-        }
-
-        /* Custom scrollbar */
+        /* Custom Scrollbar */
         ::-webkit-scrollbar {
-            width: 6px;
+            width: 8px;
         }
         ::-webkit-scrollbar-track {
-            background: transparent;
+            background: #161616;
         }
         ::-webkit-scrollbar-thumb {
-            background: rgba(255, 181, 188, 0.3);
-            border-radius: 9999px;
+            background: #393939;
+            border-radius: 4px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 181, 188, 0.5);
+            background: #0f62fe;
         }
 
-        .glow-romantic {
-            box-shadow: 0 0 70px -10px rgba(255, 107, 129, 0.35);
-        }
-
-        @keyframes floatHeart {
-            0% { transform: translateY(0px) scale(0.8) rotate(0deg); opacity: 1; }
-            50% { transform: translateY(-80px) scale(1.2) rotate(15deg); opacity: 0.8; }
-            100% { transform: translateY(-160px) scale(1.6) rotate(-15deg); opacity: 0; }
-        }
-
-        .floating-heart {
-            position: absolute;
-            animation: floatHeart 1.8s ease-out forwards;
-            pointer-events: none;
-            color: #ff6b81;
-            font-size: 26px;
-            z-index: 100;
-        }
-
-        @keyframes pulseGlow {
-            0%, 100% { transform: scale(1); opacity: 0.2; }
-            50% { transform: scale(1.1); opacity: 0.35; }
-        }
-
-        .ambient-glow {
-            animation: pulseGlow 8s ease-in-out infinite;
+        /* Print optimization */
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            .print-only {
+                display: block !important;
+            }
+            body {
+                background: white !important;
+                color: black !important;
+            }
+            .glass-panel {
+                background: white !important;
+                color: black !important;
+                border: 1px solid #ccc !important;
+            }
         }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4 sm:p-6 relative">
+<body class="min-h-screen flex flex-col justify-between antialiased">
 
-    <!-- Romantic Ambient Background Elements -->
-    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[30rem] h-[30rem] bg-rose-500/15 rounded-full blur-[140px] pointer-events-none ambient-glow"></div>
-    <div class="absolute bottom-1/4 right-1/4 w-[25rem] h-[25rem] bg-pink-600/10 rounded-full blur-[120px] pointer-events-none ambient-glow" style="animation-delay: 4s;"></div>
-
-    <!-- Floating Canvas for background soft sparkles/hearts if needed -->
-    <div id="sparkleContainer" class="fixed inset-0 pointer-events-none overflow-hidden z-0"></div>
-
-    <!-- Main Container Wrapper -->
-    <main class="w-full max-w-xl mx-auto relative min-h-[600px] flex items-center justify-center z-10">
-
-        <!-- ================= PAGE 1 ================= -->
-        <div id="page1" class="active-page page-transition flex-col items-center text-center w-full px-4 py-8">
-            <div class="glass-panel p-8 sm:p-12 rounded-[2.5rem] shadow-2xl glow-red w-full max-w-lg relative overflow-hidden glow-romantic">
-                
-                <!-- Decorative Sparkle Icon Badge -->
-                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-rose-500/15 border border-rose-400/30 text-rose-300 text-xs font-medium mb-6 tracking-wide shadow-sm">
-                    <i class="fa-solid fa-heart text-[11px] text-rose-400 animate-pulse"></i> A Special Note For You
-                </div>
-
-                <!-- Main Greeting -->
-                <h1 class="text-4xl sm:text-5xl font-bold tracking-tight text-white mb-4 leading-tight">
-                    Jyo, <br/><span class="bg-gradient-to-r from-rose-300 via-pink-300 to-rose-400 bg-clip-text text-transparent font-light">thank you and sorry</span>
-                </h1>
-
-                <p class="text-rose-100/70 text-sm sm:text-base font-normal max-w-sm mx-auto mb-10 leading-relaxed">
-                    There's something heavy on my heart that I want to share with you, openly and honestly. Please take a moment to read this.
-                </p>
-
-                <!-- Transition Button -->
-                <button onclick="goToPage2()" class="group relative inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-gradient-to-r from-rose-600 via-rose-500 to-pink-500 rounded-full overflow-hidden shadow-xl shadow-rose-600/30 transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] w-full sm:w-auto">
-                    <span class="absolute inset-0 w-full h-full bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity"></span>
-                    <span class="relative flex items-center gap-3">
-                        Open My Message <i class="fa-solid fa-arrow-right transition-transform duration-300 group-hover:translate-x-1.5"></i>
-                    </span>
-                </button>
-            </div>
-            
-            <p class="text-rose-300/40 text-xs mt-6 tracking-wider font-light">Crafted with all my love for Jyothika ✨</p>
-        </div>
-
-        <!-- ================= PAGE 2 ================= -->
-        <div id="page2" class="hidden-page page-transition flex-col items-center w-full py-2">
-            <div class="glass-panel p-6 sm:p-8 rounded-[2.5rem] shadow-2xl w-full max-w-lg relative flex flex-col max-h-[88vh]">
-                
-                <!-- Header navigation -->
-                <div class="flex items-center justify-between mb-4 pb-3 border-b border-rose-500/15">
-                    <button onclick="goToPage1()" class="text-rose-200/70 hover:text-white text-sm flex items-center gap-2 transition-colors">
-                        <i class="fa-solid fa-arrow-left text-xs"></i> Back
-                    </button>
-                    <span class="text-xs text-rose-300/80 font-medium tracking-widest uppercase">My Heart to Yours</span>
-                    <div class="w-12"></div>
-                </div>
-
-                <!-- Scrollable Message Card Body -->
-                <div class="overflow-y-auto pr-2 space-y-4 my-2 text-rose-100/90 text-sm sm:text-base leading-relaxed font-light text-left">
-                    <p class="font-normal text-white text-base">
-                        Jyothika, I genuinely don’t want to go if going there means hurting you or making you feel left out. Your feelings matter to me, and I hope you know that I’m not choosing anyone over you.
-                    </p>
-                    <p>
-                        But this is one situation where I feel obliged to be there. He has been there for me during some very important times in my life, both emotionally and financially, and now that he has personally asked me to be there for something important to him, I feel I should stand by him too.
-                    </p>
-                    <p>
-                        I’m not interested in going by hurting you, but I feel obliged to go because of the relationship and responsibility I have towards him.
-                    </p>
-                    <p>
-                        I hope you can understand that me going doesn’t make you any less important to me. Sometimes we may have to support our families even when it isn’t convenient for us, just like we’ve both adjusted for each other and our families before.
-                    </p>
-                    <p class="font-medium text-white pt-2 border-t border-rose-500/10">
-                        I’m not asking you to stop feeling what you feel. I just want you to understand my heart behind this and trust that I’m not doing this against you. ❤️
-                    </p>
-                </div>
-
-                <!-- Action Buttons Area -->
-                <div class="mt-6 pt-4 border-t border-rose-500/15 flex flex-col sm:flex-row gap-3 items-center justify-center relative">
-                    <!-- Love Button -->
-                    <button onclick="handleLoveClick()" class="w-full sm:flex-1 py-3.5 px-6 rounded-2xl bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-500 hover:to-pink-500 text-white font-medium text-sm transition-all duration-300 shadow-lg shadow-rose-600/30 flex items-center justify-center gap-2 group cursor-pointer">
-                        <i class="fa-solid fa-heart text-white group-hover:scale-125 transition-transform"></i> I love you too ❤️
-                    </button>
-
-                    <!-- Interactive Playful Hate Button -->
-                    <button id="hateBtn" onmouseover="dodgeHateButton()" onclick="handleHateClick()" ontouchstart="dodgeHateButton()" class="w-full sm:flex-1 py-3.5 px-6 rounded-2xl glass-card hover:bg-rose-950/40 text-rose-200/80 hover:text-white font-medium text-sm transition-all duration-300 border border-rose-500/30 flex items-center justify-center gap-2 cursor-pointer relative overflow-hidden">
-                        <i class="fa-solid fa-heart-crack text-rose-400"></i> <span id="hateBtnText">I hate you 💔</span>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-    </main>
-
-    <!-- Custom Romantic Modal / Celebration Notification -->
-    <div id="modalOverlay" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 flex items-center justify-center p-4 opacity-0 pointer-events-none transition-opacity duration-300">
-        <div id="modalCard" class="glass-panel p-8 rounded-[2rem] max-w-sm w-full text-center transform scale-95 transition-transform duration-300 shadow-2xl border border-rose-400/40 glow-romantic">
-            <div id="modalIcon" class="w-16 h-16 rounded-full bg-rose-500/20 text-rose-400 flex items-center justify-center mx-auto mb-4 text-2xl animate-bounce">
-                <i class="fa-solid fa-heart"></i>
-            </div>
-            <h3 id="modalTitle" class="text-xl font-semibold text-white mb-2">I love you too ❤️</h3>
-            <p id="modalDesc" class="text-rose-200/80 text-sm mb-6 leading-relaxed">You can never really stay mad at me! Thank you for understanding, Jyo. Every beat of my heart is for you.</p>
-            <button onclick="closeModal()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-rose-500 to-pink-500 text-white font-semibold text-sm hover:brightness-110 transition-all shadow-lg shadow-rose-500/25">
-                Always & Forever ✨
-            </button>
+    <!-- Anti-cheating Overlay Warning Toast -->
+    <div id="warningToast" class="fixed top-5 right-5 z-50 transform translate-x-full transition-transform duration-300 ease-in-out max-w-md bg-red-900/90 text-red-100 p-4 rounded-xl border border-red-500 shadow-2xl backdrop-blur-md hidden flex items-center space-x-3">
+        <i class="fas fa-exclamation-triangle text-2xl text-red-400"></i>
+        <div>
+            <h4 class="font-bold text-sm text-red-200 uppercase tracking-wider">Security Warning</h4>
+            <p class="text-xs text-red-300" id="warningMsg">Focus lost or tab switch detected! This incident has been logged.</p>
         </div>
     </div>
 
+    <!-- MAIN HEADER -->
+    <header class="w-full bg-ibm-dark/90 border-b border-ibm-border p-4 sticky top-0 z-40 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center space-x-3">
+                <div class="bg-ibm-blue text-white px-3 py-1 font-bold rounded tracking-widest text-lg shadow-lg">
+                    IBM
+                </div>
+                <div>
+                    <h1 class="text-lg font-bold tracking-wide text-white leading-tight">HIMS AI ASSESSMENT</h1>
+                    <p class="text-xs text-gray-400">Center of Excellence • AI & Machine Learning</p>
+                </div>
+            </div>
+            <div class="hidden sm:flex items-center space-x-2 text-xs text-gray-400 bg-ibm-card px-3 py-1.5 rounded-lg border border-ibm-border">
+                <i class="fas fa-shield-alt text-ibm-accent"></i>
+                <span>Proctored Session</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- CONTAINER FOR PAGES -->
+    <main class="flex-grow flex items-center justify-center p-4 sm:p-6 md:p-8">
+
+        <!-- PAGE 1: WELCOME & REGISTRATION -->
+        <section id="page1" class="w-full max-w-xl transition-all duration-500">
+            <div class="glass-panel p-6 sm:p-10 rounded-2xl shadow-2xl relative overflow-hidden">
+                <div class="absolute -top-24 -right-24 w-48 h-48 bg-ibm-blue/20 rounded-full blur-3xl pointer-events-none"></div>
+                
+                <div class="text-center mb-8">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-ibm-blue/10 border border-ibm-blue/30 rounded-2xl mb-4 text-ibm-accent">
+                        <i class="fas fa-user-graduate text-2xl"></i>
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-white mb-2">Student Verification</h2>
+                    <p class="text-sm text-gray-400">Please enter your details to initialize the proctored assessment</p>
+                </div>
+
+                <form id="registrationForm" onsubmit="handleStartQuiz(event)" class="space-y-5">
+                    <div>
+                        <label for="studentName" class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">
+                            Student Full Name <span class="text-ibm-accent">*</span>
+                        </label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
+                                <i class="fas fa-user text-sm"></i>
+                            </span>
+                            <input type="text" id="studentName" required placeholder="John Doe"
+                                class="w-full pl-10 pr-4 py-3 bg-ibm-dark/80 border border-ibm-border rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-ibm-blue focus:ring-1 focus:ring-ibm-blue transition-all">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="course" class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">
+                            Course / Department <span class="text-ibm-accent">*</span>
+                        </label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
+                                <i class="fas fa-book-open text-sm"></i>
+                            </span>
+                            <input type="text" id="course" required placeholder="e.g., BCA AI & ML"
+                                class="w-full pl-10 pr-4 py-3 bg-ibm-dark/80 border border-ibm-border rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-ibm-blue focus:ring-1 focus:ring-ibm-blue transition-all">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="emailId" class="block text-xs font-semibold text-gray-300 uppercase tracking-wider mb-2">
+                            Email Identifier <span class="text-ibm-accent">*</span>
+                        </label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-500">
+                                <i class="fas fa-envelope text-sm"></i>
+                            </span>
+                            <input type="email" id="emailId" required placeholder="student@university.edu"
+                                class="w-full pl-10 pr-4 py-3 bg-ibm-dark/80 border border-ibm-border rounded-xl text-white placeholder-gray-500 focus:outline-none focus:border-ibm-blue focus:ring-1 focus:ring-ibm-blue transition-all">
+                        </div>
+                    </div>
+
+                    <!-- Instructions Box -->
+                    <div class="bg-ibm-dark/60 p-4 rounded-xl border border-ibm-border text-xs text-gray-400 space-y-2">
+                        <div class="font-semibold text-gray-200 flex items-center space-x-1.5">
+                            <i class="fas fa-exclamation-circle text-ibm-accent"></i>
+                            <span>Assessment Guidelines:</span>
+                        </div>
+                        <ul class="list-disc list-inside space-y-1 pl-1">
+                            <li>Total Questions: <strong>35 MCQs</strong></li>
+                            <li>Timer: <strong>60 seconds per question</strong></li>
+                            <li>Entering the quiz triggers <strong>Fullscreen Mode</strong></li>
+                            <li>Switching tabs, exiting fullscreen, or context-menu is restricted</li>
+                        </ul>
+                    </div>
+
+                    <button type="submit" 
+                        class="w-full py-4 bg-ibm-blue hover:bg-ibm-accent text-white font-bold rounded-xl shadow-lg shadow-ibm-blue/30 transition-all flex items-center justify-center space-x-2 group">
+                        <span>Begin Security Verification & Start Quiz</span>
+                        <i class="fas fa-arrow-right text-sm transform group-hover:translate-x-1 transition-transform"></i>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- PAGE 2: TIMED ASSESSMENT -->
+        <section id="page2" class="w-full max-w-4xl hidden transition-all duration-500">
+            <div class="glass-panel rounded-2xl shadow-2xl p-6 sm:p-8 relative overflow-hidden border border-ibm-border">
+                
+                <!-- Assessment Top Bar -->
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center pb-6 border-b border-ibm-border gap-4">
+                    <div>
+                        <div class="text-xs uppercase tracking-wider text-ibm-accent font-semibold flex items-center space-x-2">
+                            <span id="displayStudentInfo" class="text-gray-300">Student: Loading...</span>
+                        </div>
+                        <h2 class="text-xl font-bold text-white mt-0.5">AI & Machine Learning MCQs</h2>
+                    </div>
+
+                    <!-- Timer Widget -->
+                    <div class="flex items-center space-x-3 bg-ibm-dark/90 px-4 py-2.5 rounded-xl border border-ibm-border w-full sm:w-auto justify-between sm:justify-start">
+                        <div class="flex items-center space-x-2">
+                            <i class="fas fa-stopwatch text-ibm-accent animate-pulse text-lg"></i>
+                            <span class="text-xs text-gray-400 uppercase tracking-wider">Time Remaining:</span>
+                        </div>
+                        <span id="timerDisplay" class="text-2xl font-mono font-bold text-ibm-accent">60</span>
+                        <span class="text-xs text-gray-500">s</span>
+                    </div>
+                </div>
+
+                <!-- Timer Progress Bar -->
+                <div class="w-full bg-ibm-dark h-1.5 rounded-full mt-4 overflow-hidden">
+                    <div id="timerBar" class="bg-ibm-blue h-full w-full transition-all duration-1000 linear"></div>
+                </div>
+
+                <!-- Question Progress Indicator -->
+                <div class="mt-6 flex justify-between items-center text-xs text-gray-400 font-medium">
+                    <span id="questionCounter">Question 1 of 35</span>
+                    <span id="overallPercentage">Progress: 3%</span>
+                </div>
+                
+                <div class="w-full bg-ibm-dark/50 h-1 rounded-full mt-2 overflow-hidden mb-8">
+                    <div id="overallProgressBar" class="bg-ibm-accent h-full w-0 transition-all duration-300"></div>
+                </div>
+
+                <!-- Question Card -->
+                <div class="space-y-6">
+                    <h3 id="questionText" class="text-lg sm:text-xl font-semibold text-white leading-relaxed">
+                        Loading question...
+                    </h3>
+
+                    <!-- Options List -->
+                    <div id="optionsContainer" class="space-y-3">
+                        <!-- Options injected dynamically by JS -->
+                    </div>
+                </div>
+
+                <!-- Action Footer -->
+                <div class="mt-8 pt-6 border-t border-ibm-border flex justify-between items-center">
+                    <div class="text-xs text-gray-500 flex items-center space-x-1.5">
+                        <i class="fas fa-lock text-ibm-accent"></i>
+                        <span>Auto-advances when timer expires</span>
+                    </div>
+                    <button id="nextBtn" onclick="submitCurrentAnswer()" 
+                        class="px-6 py-3 bg-ibm-blue hover:bg-ibm-accent text-white font-semibold rounded-xl shadow-md transition-all flex items-center space-x-2">
+                        <span id="nextBtnText">Next Question</span>
+                        <i class="fas fa-chevron-right text-xs"></i>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 3: FINAL SCORECARD / RESULTS -->
+        <section id="page3" class="w-full max-w-4xl hidden transition-all duration-500">
+            <div class="glass-panel rounded-2xl shadow-2xl p-6 sm:p-10 border border-ibm-border space-y-8">
+                
+                <!-- Results Header Banner -->
+                <div class="text-center space-y-3 pb-6 border-b border-ibm-border">
+                    <div class="inline-flex p-3 rounded-2xl bg-ibm-blue/10 border border-ibm-blue/30 text-ibm-accent mb-2">
+                        <i class="fas fa-award text-3xl"></i>
+                    </div>
+                    <h2 class="text-3xl font-bold text-white">Assessment Completed</h2>
+                    <p class="text-xs text-gray-400">IBM HIMS AI Assessment Verification Report</p>
+                </div>
+
+                <!-- Summary Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- Score Card -->
+                    <div class="bg-ibm-dark/80 p-5 rounded-xl border border-ibm-border text-center space-y-1">
+                        <span class="text-xs text-gray-400 uppercase tracking-wider">Final Score</span>
+                        <div class="text-3xl font-extrabold text-ibm-accent" id="resScore">0 / 35</div>
+                        <span class="text-xs text-gray-500" id="resPercentage">0%</span>
+                    </div>
+                    <!-- Status Card -->
+                    <div class="bg-ibm-dark/80 p-5 rounded-xl border border-ibm-border text-center space-y-1">
+                        <span class="text-xs text-gray-400 uppercase tracking-wider">Qualification Status</span>
+                        <div class="text-2xl font-bold" id="resStatus">--</div>
+                        <span class="text-xs text-gray-500">Passing Grade: 50%</span>
+                    </div>
+                    <!-- Time Taken Card -->
+                    <div class="bg-ibm-dark/80 p-5 rounded-xl border border-ibm-border text-center space-y-1">
+                        <span class="text-xs text-gray-400 uppercase tracking-wider">Total Duration</span>
+                        <div class="text-2xl font-bold text-white" id="resTime">--</div>
+                        <span class="text-xs text-gray-500">Proctored Session</span>
+                    </div>
+                </div>
+
+                <!-- Student Information Summary Block -->
+                <div class="bg-ibm-card/50 p-5 rounded-xl border border-ibm-border space-y-2 text-sm">
+                    <h4 class="font-bold text-gray-200 text-xs uppercase tracking-wider mb-3 flex items-center space-x-2">
+                        <i class="fas fa-id-card text-ibm-accent"></i>
+                        <span>Candidate Credentials</span>
+                    </h4>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
+                        <div>
+                            <span class="text-gray-500 block">Student Name:</span>
+                            <span id="resName" class="font-semibold text-white">--</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-500 block">Course / Major:</span>
+                            <span id="resCourse" class="font-semibold text-white">--</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-500 block">Email ID:</span>
+                            <span id="resEmail" class="font-semibold text-white">--</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Controls -->
+                <div class="flex flex-wrap gap-4 justify-between items-center no-print">
+                    <button onclick="window.print()" class="px-5 py-2.5 bg-ibm-card hover:bg-ibm-border border border-ibm-border text-gray-200 text-sm font-semibold rounded-xl transition-all flex items-center space-x-2">
+                        <i class="fas fa-print"></i>
+                        <span>Print Results Report</span>
+                    </button>
+                    <button onclick="restartAssessment()" class="px-5 py-2.5 bg-ibm-blue hover:bg-ibm-accent text-white text-sm font-semibold rounded-xl transition-all flex items-center space-x-2">
+                        <i class="fas fa-redo-alt"></i>
+                        <span>Retake Assessment</span>
+                    </button>
+                </div>
+
+                <!-- Detailed Question Breakdown -->
+                <div class="space-y-4 pt-4 border-t border-ibm-border">
+                    <h3 class="text-lg font-bold text-white flex items-center space-x-2">
+                        <i class="fas fa-list-check text-ibm-accent"></i>
+                        <span>Detailed Answer Key Review</span>
+                    </h3>
+                    
+                    <div id="reviewContainer" class="space-y-4 max-h-[500px] overflow-y-auto pr-2">
+                        <!-- Detailed review items dynamically generated -->
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="w-full bg-ibm-dark/90 border-t border-ibm-border py-4 px-6 text-center text-xs text-gray-500 no-print">
+        <p>© 2026 IBM HIMS Educational Platform. Secure Proctored Examination Suite.</p>
+    </footer>
+
+    <!-- JAVASCRIPT LOGIC & ASSESSMENT ENGINE -->
     <script>
-        let hateStateIndex = 0;
-        const sweetMessages = [
-            { text: "I love you too ❤️", responseTitle: "Nice try, Jyo! ❤️️", responseDesc: "You can't hate me that easily! My heart only knows how to love you back. 🥰" },
-            { text: "Still love you! 🥰", responseTitle: "Nope, not allowed! 💕", responseDesc: "Even if you try to click hate, it turns straight into love because you are my world." },
-            { text: "I love you endlessly ✨", responseTitle: "Forever Yours ❤️", responseDesc: "Thank you for reading my heart and understanding. We are in this together, always." }
+        // -------------------------------------------------------------
+        // QUESTION DATABASE & ANSWER KEY
+        // -------------------------------------------------------------
+        const questionsData = [
+            { id: 1, q: "Which of the following best defines Artificial Intelligence?", options: { A: "A system that only performs mathematical calculations", B: "A field of computer science that creates systems capable of tasks associated with human intelligence", C: "A database management technique", D: "A programming language" }, ans: "B" },
+            { id: 2, q: "Which of the following is a characteristic of AI?", options: { A: "Data deletion", B: "Learning", C: "Hardware manufacturing", D: "File compression" }, ans: "B" },
+            { id: 3, q: "A college wants a system that predicts whether a student is likely to fail based on attendance, previous marks and study hours. Which type of AI is most appropriate?", options: { A: "Generative AI", B: "Computer Vision AI", C: "Predictive AI", D: "Generative Vision AI" }, ans: "C" },
+            { id: 4, q: "Which relationship is correct?", options: { A: "AI is a subset of ML", B: "ML is a subset of AI", C: "Deep Learning is broader than AI", D: "AI and ML are completely unrelated" }, ans: "B" },
+            { id: 5, q: "AI : Broad field :: Deep Learning : ?", options: { A: "Database", B: "Subset of Machine Learning", C: "Operating system", D: "Programming language" }, ans: "B" },
+            { id: 6, q: "A student asks an AI system to write a story based on a short prompt. The system produces completely new text. Which type of AI is being demonstrated?", options: { A: "Predictive AI", B: "Computer Vision AI", C: "Generative AI", D: "Decision-Making AI" }, ans: "C" },
+            { id: 7, q: "Which of the following is a typical application of Generative AI?", options: { A: "Generating text", B: "Measuring CPU temperature", C: "Assigning IP addresses", D: "Formatting a hard disk" }, ans: "A" },
+            { id: 8, q: "An online shopping website examines a customer’s previous activity and ranks products that the customer may want to purchase. This is primarily an example of:", options: { A: "Generative AI", B: "Decision-Making AI", C: "Computer Vision AI", D: "Self-Supervised Learning" }, ans: "B" },
+            { id: 9, q: "Netflix recommendation system : Ranked choices :: ChatGPT : ?", options: { A: "New language generation", B: "Face detection", C: "Database indexing", D: "Hardware monitoring" }, ans: "A" },
+            { id: 10, q: "A security camera identifies a person’s face and compares it against authorized facial representations. Which AI category is primarily involved?", options: { A: "Predictive AI", B: "Computer Vision AI", C: "Generative AI", D: "Reinforcement Learning" }, ans: "B" },
+            { id: 11, q: "Which computer vision technique extracts text from scanned documents or images?", options: { A: "OCR", B: "Regression", C: "Clustering", D: "Ranking" }, ans: "A" },
+            { id: 12, q: "A bank wants to identify suspicious transactions. The system gives each transaction a fraud-risk score before deciding whether it should be approved, rejected or reviewed. Which approach is being used?", options: { A: "Predictive AI", B: "Generative AI", C: "Image segmentation", D: "Transfer Learning" }, ans: "A" },
+            { id: 13, q: "What is the first step in developing an AI system?", options: { A: "Deploy the model", B: "Define the problem", C: "Train the model", D: "Monitor the system" }, ans: "B" },
+            { id: 14, q: "A team says, “We need to build an AI chatbot.” Their instructor asks them to specify exactly what the chatbot should accomplish and how success will be measured. Which development activity is the instructor emphasizing?", options: { A: "Deployment", B: "Problem definition", C: "Model optimization", D: "Monitoring" }, ans: "B" },
+            { id: 15, q: "Which of the following is NOT normally part of data preparation?", options: { A: "Removing duplicate records", B: "Handling missing values", C: "Checking for imbalance", D: "Deploying the final application" }, ans: "D" },
+            { id: 16, q: "AI Model : Produces predictions or generations :: AI Agent : ?", options: { A: "Only stores data", B: "Performs actions toward a goal", C: "Provides internet connectivity", D: "Controls computer hardware" }, ans: "B" },
+            { id: 17, q: "An AI application receives a user’s request, checks their calendar, decides what action is required and creates a meeting. What does this best represent?", options: { A: "AI Model", B: "AI Agent", C: "AI Dataset", D: "AI Parameter" }, ans: "B" },
+            { id: 18, q: "What is the primary role of an AI platform?", options: { A: "Only generate text", B: "Provide infrastructure and development services for AI systems", C: "Replace all AI models", D: "Store only images" }, ans: "B" },
+            { id: 19, q: "A company trains a model using historical transactions labeled “fraud” or “legitimate.” Which learning method is this?", options: { A: "Unsupervised learning", B: "Reinforcement learning", C: "Supervised learning", D: "Transfer learning" }, ans: "C" },
+            { id: 20, q: "Which learning method works with data without explicit target labels?", options: { A: "Supervised learning", B: "Unsupervised learning", C: "Reinforcement learning", D: "Transfer learning" }, ans: "B" },
+            { id: 21, q: "A company has 5,000 labeled customer records but 500,000 unlabeled records. Labeling the remaining data is expensive. Which learning approach could make use of both?", options: { A: "Semi-supervised learning", B: "Reinforcement learning", C: "Pure supervised learning", D: "Regression" }, ans: "A" },
+            { id: 22, q: "In reinforcement learning, an agent learns primarily through:", options: { A: "Labels", B: "Rewards and penalties", C: "Database queries", D: "HTML elements" }, ans: "B" },
+            { id: 23, q: "Reinforcement Learning : Rewards :: Supervised Learning : ?", options: { A: "Penalties", B: "Labeled examples", C: "Random actions", D: "Unlabeled clusters" }, ans: "B" },
+            { id: 24, q: "A language model learns to predict the next token from large amounts of text without humans manually labeling every example. Which approach does this describe?", options: { A: "Supervised learning", B: "Self-supervised learning", C: "Reinforcement learning", D: "Unsupervised clustering" }, ans: "B" },
+            { id: 25, q: "Why is a test dataset kept isolated until final evaluation?", options: { A: "To increase the size of the training dataset", B: "To estimate how well the model generalizes to unseen data", C: "To make the model train faster", D: "To replace the validation dataset" }, ans: "B" },
+            { id: 26, q: "A model performs extremely well on training data but performs poorly on new data. What problem is most likely occurring?", options: { A: "Underfitting", B: "Overfitting", C: "Data deployment", D: "Clustering" }, ans: "B" },
+            { id: 27, q: "Which metric is particularly associated with balancing precision and recall?", options: { A: "MAE", B: "RMSE", C: "F1-score", D: "MSE" }, ans: "C" },
+            { id: 28, q: "A chatbot needs to answer “Who is the HOD of BCA?” The exact answer is stored in the college database. What is the best approach according to the notes?", options: { A: "Ask the generative model to invent an answer", B: "Retrieve the exact structured information from the database", C: "Ignore the question", D: "Train a computer vision model" }, ans: "B" },
+            { id: 29, q: "Which technology is primarily responsible for the structure of a chatbot webpage?", options: { A: "CSS", B: "JavaScript", C: "HTML", D: "Python" }, ans: "C" },
+            { id: 30, q: "A chatbot’s webpage looks correct, but clicking the Send button does not send the user’s message to the backend. Which component should be investigated first?", options: { A: "JavaScript", B: "CSS", C: "Database", D: "HTML title" }, ans: "A" },
+            { id: 31, q: "In the chatbot architecture described in the notes, Python primarily acts as the:", options: { A: "Frontend styling language", B: "Backend/application layer", C: "Image-processing format", D: "Database itself" }, ans: "B" },
+            { id: 32, q: "A developer writes an IBM API key directly inside a Python source file and uploads the project to GitHub. What is the major problem?", options: { A: "The HTML will stop working", B: "The API key may be exposed", C: "CSS will become invalid", D: "The database will automatically delete itself" }, ans: "B" },
+            { id: 33, q: "HTML : Structure :: CSS : ?", options: { A: "Database", B: "Styling and presentation", C: "AI training", D: "Backend processing" }, ans: "B" },
+            { id: 34, q: "After deployment, an AI system’s performance gradually decreases because the data and relationships in the real world have changed. What should the development team do?", options: { A: "Ignore the problem", B: "Monitor the system and consider retraining or replacing the model", C: "Delete the test dataset", D: "Remove the user interface" }, ans: "B" },
+            { id: 35, q: "A student asks a chatbot, “Who is the HOD of BCA?” The browser sends the question to JavaScript, JavaScript sends it to /chat, Flask receives it, the AI service identifies the relevant intent, Python retrieves the exact HOD record from the database, and the backend returns JSON. Which sequence best represents the system?", options: { A: "Browser → CSS → Database → HTML → AI", B: "Browser → JavaScript → Flask/Python → AI service → Database → JSON → JavaScript", C: "Browser → Database → CSS → Python → HTML", D: "Browser → AI model → CSS → Database → HTML" }, ans: "B" }
         ];
 
-        function goToPage2() {
-            const page1 = document.getElementById('page1');
-            const page2 = document.getElementById('page2');
-            
-            page1.classList.remove('active-page');
-            page1.classList.add('hidden-page');
-            
-            page2.classList.remove('hidden-page');
-            page2.classList.add('active-page');
-        }
+        // -------------------------------------------------------------
+        // APPLICATION STATE
+        // -------------------------------------------------------------
+        let studentData = { name: '', course: '', email: '' };
+        let currentQuestionIndex = 0;
+        let userAnswers = {}; // { questionId: "A"|"B"|"C"|"D" }
+        let timerInterval = null;
+        let timeLeft = 60;
+        let startTime = null;
+        let endTime = null;
 
-        function goToPage1() {
-            const page1 = document.getElementById('page1');
-            const page2 = document.getElementById('page2');
-            
-            page2.classList.remove('active-page');
-            page2.classList.add('hidden-page');
-            
-            page1.classList.remove('hidden-page');
-            page1.classList.add('active-page');
-        }
+        // -------------------------------------------------------------
+        // SECURITY & PROCTORING EVENT HANDLERS
+        // -------------------------------------------------------------
+        
+        // 1. Disable Context Menu (Right-Click)
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            showWarning("Right-clicking is disabled during the assessment.");
+        });
 
-        function dodgeHateButton() {
-            const btnText = document.getElementById('hateBtnText');
-            const hateBtn = document.getElementById('hateBtn');
-            
-            const currentObj = sweetMessages[hateStateIndex % sweetMessages.length];
-            btnText.innerText = currentObj.text;
-            
-            // Instantly transition button to a gorgeous glowing pink style
-            hateBtn.classList.remove('glass-card', 'text-rose-200/80');
-            hateBtn.classList.add('bg-gradient-to-r', 'from-rose-600/90', 'to-pink-600/90', 'text-white', 'border-rose-400/50', 'shadow-lg', 'shadow-rose-600/30');
-            
-            hateStateIndex++;
-        }
-
-        function handleHateClick() {
-            const currentObj = sweetMessages[(hateStateIndex - 1 + sweetMessages.length) % sweetMessages.length];
-            dodgeHateButton();
-            showModal(currentObj.responseTitle, currentObj.responseDesc);
-            createFloatingHearts();
-        }
-
-        function handleLoveClick() {
-            showModal("I love you too ❤️", "Thank you for understanding my heart, Jyothika. Your love means everything to me! ✨");
-            createFloatingHearts();
-        }
-
-        function showModal(title, desc) {
-            document.getElementById('modalTitle').innerText = title;
-            document.getElementById('modalDesc').innerText = desc;
-            
-            const overlay = document.getElementById('modalOverlay');
-            const card = document.getElementById('modalCard');
-            
-            overlay.classList.remove('opacity-0', 'pointer-events-none');
-            overlay.classList.add('opacity-100', 'pointer-events-auto');
-            
-            card.classList.remove('scale-95');
-            card.classList.add('scale-100');
-        }
-
-        function closeModal() {
-            const overlay = document.getElementById('modalOverlay');
-            const card = document.getElementById('modalCard');
-            
-            overlay.classList.remove('opacity-100', 'pointer-events-auto');
-            overlay.classList.add('opacity-0', 'pointer-events-none');
-            
-            card.classList.remove('scale-100');
-            card.classList.add('scale-95');
-        }
-
-        function createFloatingHearts() {
-            for (let i = 0; i < 8; i++) {
-                const heart = document.createElement('div');
-                heart.innerHTML = ['❤️', '💖', '✨', '💕'][Math.floor(Math.random() * 4)];
-                heart.className = 'floating-heart';
-                heart.style.left = (window.innerWidth / 2 - 120 + Math.random() * 240) + 'px';
-                heart.style.bottom = '150px';
-                heart.style.animationDuration = (1.2 + Math.random() * 1) + 's';
-                document.body.appendChild(heart);
-                setTimeout(() => {
-                    heart.remove();
-                }, 1800);
+        // 2. Block Keyboard Shortcuts (Copy, Paste, DevTools, Inspect, etc.)
+        document.addEventListener('keydown', function(e) {
+            // Block Ctrl+C, Ctrl+V, Ctrl+U, Ctrl+S, Ctrl+P, F12
+            if (e.ctrlKey && (e.key === 'c' || e.key === 'v' || e.key === 'u' || e.key === 's' || e.key === 'p' || e.key === 'a') || 
+                e.key === 'F12') {
+                e.preventDefault();
+                showWarning("Keyboard shortcuts and copying are strictly disabled.");
             }
+        });
+
+        // 3. Tab Switch / Focus Loss Detection
+        window.addEventListener('blur', function() {
+            if (currentQuestionIndex >= 0 && currentQuestionIndex < questionsData.length && !document.getElementById('page2').classList.contains('hidden')) {
+                showWarning("Tab switch / Window focus lost! Incident logged by proctor.");
+            }
+        });
+
+        // 4. Fullscreen Exit Detection
+        document.addEventListener('fullscreenchange', function() {
+            if (!document.fullscreenElement && !document.getElementById('page2').classList.contains('hidden')) {
+                showWarning("You exited full screen mode! Please remain in fullscreen.");
+            }
+        });
+
+        function showWarning(msg) {
+            const toast = document.getElementById('warningToast');
+            document.getElementById('warningMsg').innerText = msg;
+            toast.classList.remove('hidden', 'translate-x-full');
+            
+            setTimeout(() => {
+                toast.classList.add('translate-x-full');
+                setTimeout(() => toast.classList.add('hidden'), 300);
+            }, 4000);
+        }
+
+        // Request Fullscreen helper
+        function enterFullScreen() {
+            if (document.documentElement.requestFullscreen) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log("Fullscreen request declined or blocked.");
+                });
+            }
+        }
+
+        // -------------------------------------------------------------
+        // QUIZ NAVIGATION & LOGIC
+        // -------------------------------------------------------------
+        function handleStartQuiz(e) {
+            e.preventDefault();
+            
+            // Gather student info
+            studentData.name = document.getElementById('studentName').value.trim();
+            studentData.course = document.getElementById('course').value.trim();
+            studentData.email = document.getElementById('emailId').value.trim();
+
+            if (!studentData.name || !studentData.course || !studentData.email) {
+                alert("Please fill in all mandatory fields.");
+                return;
+            }
+
+            // Enter Fullscreen
+            enterFullScreen();
+
+            // Set UI header text
+            document.getElementById('displayStudentInfo').innerText = `Student: ${studentData.name} (${studentData.course})`;
+
+            // Switch Page Views
+            document.getElementById('page1').classList.add('hidden');
+            document.getElementById('page2').classList.remove('hidden');
+
+            // Record Start Time
+            startTime = new Date();
+
+            // Render first question
+            currentQuestionIndex = 0;
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            clearInterval(timerInterval);
+            timeLeft = 60;
+            updateTimerDisplay();
+
+            const qData = questionsData[currentQuestionIndex];
+            
+            // Update Question Counter & Overall Progress
+            document.getElementById('questionCounter').innerText = `Question ${currentQuestionIndex + 1} of ${questionsData.length}`;
+            const progressPercent = Math.round(((currentQuestionIndex + 1) / questionsData.length) * 100);
+            document.getElementById('overallPercentage').innerText = `Progress: ${progressPercent}%`;
+            document.getElementById('overallProgressBar').style.width = `${progressPercent}%`;
+
+            // Update Next button label on last question
+            if (currentQuestionIndex === questionsData.length - 1) {
+                document.getElementById('nextBtnText').innerText = "Submit Assessment";
+            } else {
+                document.getElementById('nextBtnText').innerText = "Next Question";
+            }
+
+            // Set Question Text
+            document.getElementById('questionText').innerText = `${qData.id}. ${qData.q}`;
+
+            // Render Options
+            const container = document.getElementById('optionsContainer');
+            container.innerHTML = '';
+
+            const selectedAns = userAnswers[qData.id];
+
+            Object.keys(qData.options).forEach(optKey => {
+                const optVal = qData.options[optKey];
+                const isSelected = selectedAns === optKey;
+
+                const optButton = document.createElement('button');
+                optButton.type = 'button';
+                optButton.onclick = () => selectOption(qData.id, optKey);
+                optButton.className = `w-full text-left p-4 rounded-xl border transition-all flex items-start space-x-3 group ${
+                    isSelected 
+                    ? 'bg-ibm-blue/20 border-ibm-blue text-white shadow-lg' 
+                    : 'bg-ibm-dark/60 border-ibm-border text-gray-300 hover:border-gray-500 hover:bg-ibm-card'
+                }`;
+
+                optButton.innerHTML = `
+                    <span class="w-7 h-7 flex items-center justify-center rounded-lg border text-xs font-bold transition-colors ${
+                        isSelected 
+                        ? 'bg-ibm-blue text-white border-ibm-blue' 
+                        : 'border-ibm-border text-gray-400 group-hover:border-gray-400'
+                    }">${optKey}</span>
+                    <span class="text-sm pt-0.5 leading-relaxed">${optVal}</span>
+                `;
+
+                container.appendChild(optButton);
+            });
+
+            // Start Per-Question 60s Countdown
+            startTimer();
+        }
+
+        function selectOption(questionId, optionKey) {
+            userAnswers[questionId] = optionKey;
+            
+            // Re-render options to update active UI selection state
+            const container = document.getElementById('optionsContainer');
+            const buttons = container.querySelectorAll('button');
+            const keys = ['A', 'B', 'C', 'D'];
+
+            buttons.forEach((btn, idx) => {
+                const key = keys[idx];
+                const isSelected = optionKey === key;
+                btn.className = `w-full text-left p-4 rounded-xl border transition-all flex items-start space-x-3 group ${
+                    isSelected 
+                    ? 'bg-ibm-blue/20 border-ibm-blue text-white shadow-lg' 
+                    : 'bg-ibm-dark/60 border-ibm-border text-gray-300 hover:border-gray-500 hover:bg-ibm-card'
+                }`;
+                const badge = btn.querySelector('span');
+                badge.className = `w-7 h-7 flex items-center justify-center rounded-lg border text-xs font-bold transition-colors ${
+                    isSelected 
+                    ? 'bg-ibm-blue text-white border-ibm-blue' 
+                    : 'border-ibm-border text-gray-400 group-hover:border-gray-400'
+                }`;
+            });
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    submitCurrentAnswer(); // Auto-advance when time expires
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            document.getElementById('timerDisplay').innerText = timeLeft < 10 ? `0${timeLeft}` : timeLeft;
+            const percentage = (timeLeft / 60) * 100;
+            const bar = document.getElementById('timerBar');
+            bar.style.width = `${percentage}%`;
+
+            if (timeLeft <= 10) {
+                bar.className = "bg-ibm-danger h-full w-full transition-all duration-1000 linear";
+                document.getElementById('timerDisplay').className = "text-2xl font-mono font-bold text-ibm-danger animate-pulse";
+            } else {
+                bar.className = "bg-ibm-blue h-full w-full transition-all duration-1000 linear";
+                document.getElementById('timerDisplay').className = "text-2xl font-mono font-bold text-ibm-accent";
+            }
+        }
+
+        function submitCurrentAnswer() {
+            clearInterval(timerInterval);
+
+            if (currentQuestionIndex < questionsData.length - 1) {
+                currentQuestionIndex++;
+                renderQuestion();
+            } else {
+                finishAssessment();
+            }
+        }
+
+        // -------------------------------------------------------------
+        // ASSESSMENT EVALUATION & FINAL REPORT GENERATION
+        // -------------------------------------------------------------
+        function finishAssessment() {
+            endTime = new Date();
+            
+            // Calculate Score
+            let correctCount = 0;
+            questionsData.forEach(q => {
+                if (userAnswers[q.id] === q.ans) {
+                    correctCount++;
+                }
+            });
+
+            const totalQuestions = questionsData.length;
+            const scorePercent = Math.round((correctCount / totalQuestions) * 100);
+            
+            // Calculate Duration
+            const diffMs = endTime - startTime;
+            const diffMins = Math.floor(diffMs / 60000);
+            const diffSecs = Math.floor((diffMs % 60000) / 1000);
+            const durationStr = `${diffMins}m ${diffSecs}s`;
+
+            // Populate Scorecard Page
+            document.getElementById('resScore').innerText = `${correctCount} / ${totalQuestions}`;
+            document.getElementById('resPercentage').innerText = `${scorePercent}% Score`;
+            document.getElementById('resTime').innerText = durationStr;
+
+            document.getElementById('resName').innerText = studentData.name;
+            document.getElementById('resCourse').innerText = studentData.course;
+            document.getElementById('resEmail').innerText = studentData.email;
+
+            // Qualification Badge
+            const statusElem = document.getElementById('resStatus');
+            if (scorePercent >= 50) {
+                statusElem.innerText = "PASSED";
+                statusElem.className = "text-2xl font-bold text-ibm-success";
+            } else {
+                statusElem.innerText = "NEEDS IMPROVEMENT";
+                statusElem.className = "text-2xl font-bold text-ibm-danger";
+            }
+
+            // Render Detailed Review Breakdown
+            const reviewContainer = document.getElementById('reviewContainer');
+            reviewContainer.innerHTML = '';
+
+            questionsData.forEach((q, idx) => {
+                const userAns = userAnswers[q.id] || "Unanswered";
+                const isCorrect = userAns === q.ans;
+
+                const reviewCard = document.createElement('div');
+                reviewCard.className = `p-4 rounded-xl border ${
+                    isCorrect ? 'bg-ibm-dark/60 border-ibm-success/30' : 'bg-ibm-dark/60 border-ibm-danger/30'
+                } text-xs space-y-2`;
+
+                reviewCard.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <span class="font-bold text-gray-200">Q${idx + 1}. ${q.q}</span>
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
+                            isCorrect ? 'bg-green-900/40 text-green-300 border border-green-700' : 'bg-red-900/40 text-red-300 border border-red-700'
+                        }">
+                            ${isCorrect ? 'Correct' : 'Incorrect'}
+                        </span>
+                    </div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1 text-gray-400">
+                        <div>Your Answer: <span class="font-semibold ${isCorrect ? 'text-green-400' : 'text-red-400'}">${userAns} ${userAns !== "Unanswered" ? `- ${q.options[userAns]}` : ''}</span></div>
+                        <div>Correct Answer: <span class="font-semibold text-ibm-accent">${q.ans} - ${q.options[q.ans]}</span></div>
+                    </div>
+                `;
+
+                reviewContainer.appendChild(reviewCard);
+            });
+
+            // Switch to Results Page
+            document.getElementById('page2').classList.add('hidden');
+            document.getElementById('page3').classList.remove('hidden');
+
+            // Exit Fullscreen if active
+            if (document.fullscreenElement) {
+                document.exitFullscreen().catch(e => {});
+            }
+        }
+
+        function restartAssessment() {
+            userAnswers = {};
+            currentQuestionIndex = 0;
+            document.getElementById('page3').classList.add('hidden');
+            document.getElementById('page1').classList.remove('hidden');
         }
     </script>
 </body>
